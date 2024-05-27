@@ -1,4 +1,4 @@
-# mlops-zoomcamp
+# MLOps-zoomcamp
 MLOps zoomcamp
 
-Putting machine Learning models into production.
+Putting machine learning models into production (and keeping an eye on them).
