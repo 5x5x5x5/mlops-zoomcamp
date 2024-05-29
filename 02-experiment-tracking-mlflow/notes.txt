@@ -1,0 +1,203 @@
+Experiment Tracking
+
+MLOps Zoomcamp
+
+Important concepts
+
+● ML experiment: the process of building an ML model
+● Experiment run: each trial in an ML experiment
+● Run artifact: any file that is associated with an ML run
+● Experiment metadata: information about an ML experiment like the source
+code used, the name of the user, etc.
+
+What’s experiment tracking?
+
+Experiment tracking is the process of keeping track of all the relevant information
+from an ML experiment, which includes:
+● Source code
+● Environment
+● Data
+● Model
+● Hyperparameters
+● Metrics
+● ...
+
+Why is experiment tracking so important?
+
+In general, because of these 3 main reasons:
+● Reproducibility
+● Organization
+● Optimization
+
+Tracking experiments in spreadsheets
+
+Why is not enough?
+● Error prone
+● No standard format
+● Visibility & Collaboration
+
+MLflow
+
+Definition: “An open source platform for the machine learning lifecycle” *
+In practice, it’s just a Python package that can be installed with pip, and it contains
+four main modules:
+● Tracking
+● Models
+● Model Registry
+● Projects
+
+* Official MLflow documentation: https://mlflow.org/
+
+Tracking experiments with MLflow
+
+The MLflow Tracking module allows you to organize your experiments into runs, and to keep track of:
+● Parameters
+● Metrics
+● Metadata
+● Artifacts
+● Models
+
+Along with this information, MLflow automatically logs extra information about the run:
+● Source code
+● Version of the code (git commit)
+● Start and end time
+● Author
+
+demo
+
+Model Management
+
+Machine Learning Lifecycle
+
+Source: https://neptune.ai/blog/ml-experiment-tracking
+
+Model management
+
+What’s wrong with this?
+● Error prone
+● No versioning
+● No model lineage
+
+Logging models in MLflow
+
+Two options:
+● Log model as an artifact
+mlflow.log_artifact(“mymodel”, artifact_path=“models/”)
+● Log model using the method log_model
+mlflow.<framework>.log_model(model, artifact_path=“models/”)
+
+MLflow Model Format
+
+MLflow Model
+
+model
+flavour 1
+
+model
+flavour 2
+
+Log model Deploy
+
+Model Registry
+
+Motivation
+
+Model Registry
+
+Tracking Server register model Model Registry
+model -
+run 1
+model -
+run 3
+
+model -
+run 2
+
+staging production archive
+v3 v2
+v4
+
+v1
+
+MlflowClient Class
+
+● A client of ...
+○ an MLflow Tracking Server that creates and manages experiments and runs.
+○ an MLflow Registry Server that creates and manages registered models and model
+versions.
+
+● To instantiate it we need to pass a tracking URI and/or a registry URI:
+
+Model management in MLflow
+
+The Model Registry component is a centralized model store, set of APIs, and a UI,
+to collaboratively manage the full lifecycle of an MLflow Model.
+It provides:
+● Model lineage,
+● Model versioning,
+● Stage transitions, and
+● Annotations
+
+MLflow in Practice
+
+Different scenarios for running MLflow
+
+Let’s consider these three scenarios:
+● A single data scientist participating in an ML competition
+● A cross-functional team with one data scientist working on an ML model
+● Multiple data scientists working on multiple ML models
+
+Configuring MLflow
+
+● Backend store
+○ local filesystem
+○ SQLAlchemy compatible DB (e.g. SQLite)
+● Artifacts store
+○ local filesystem
+○ remote (e.g. s3 bucket)
+● Tracking server
+○ no tracking server
+○ localhost
+○ remote
+
+Remote tracking server
+
+The tracking server can be easily
+deployed to the cloud
+Some benefits:
+● Share experiments with other
+data scientists
+● Collaborate with others to build
+and deploy models
+● Give more visibility of the data
+science efforts
+
+Issues with running a remote (shared) MLflow server
+
+● Security
+○ Restrict access to the server (e.g. access through VPN)
+● Scalability
+○ Check Deploy MLflow on AWS Fargate
+○ Check MLflow at Company Scale by Jean-Denis Lesage
+● Isolation
+○ Define standard for naming experiments, models and a set of default tags
+○ Restrict access to artifacts (e.g. use s3 buckets living in different AWS accounts)
+
+MLflow limitations (and when not to use it)
+
+● Authentication & Users: The open source version of MLflow doesn’t provide
+any sort of authentication
+● Data versioning: to ensure full reproducibility we need to version the data
+used to train the model. MLflow doesn’t provide a built-in solution for that but
+there are a few ways to deal with this limitation
+● Model/Data Monitoring & Alerting: this is outside of the scope of MLflow
+and currently there are more suitable tools for doing this
+
+MLflow alternatives
+
+There are some paid alternatives to MLflow:
+● Neptune
+● Comet
+● Weights & Biases
+● and many more
+val9299
